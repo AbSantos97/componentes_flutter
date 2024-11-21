@@ -13,12 +13,13 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMixin<HomeScreen>{
   List<TopBusquedas> busquedas = List.empty(growable: true);
   List<UsuariosUltimaBusqueda> ultimaBusqueda = List.empty(growable: true);
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     busquedas.add(TopBusquedas("Carpintero", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo3DmCjzo1WHhXzUMblPsP9zZIMAxmvzF6Iw&s"));
     busquedas.add(TopBusquedas("Programador", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSohxFzkTL45WgEzY_fQbegSt2NPDwXfJeq6Q&s"));
     busquedas.add(TopBusquedas("Veterinario", "https://static.vecteezy.com/system/resources/previews/005/520/216/non_2x/cartoon-drawing-of-a-veterinarian-vector.jpg"));
@@ -41,19 +42,19 @@ class _HomeScreenState extends State<HomeScreen> {
     busquedas.add(TopBusquedas("Veterinario", "https://static.vecteezy.com/system/resources/previews/005/520/216/non_2x/cartoon-drawing-of-a-veterinarian-vector.jpg"));
     busquedas.add(TopBusquedas("Programador", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSohxFzkTL45WgEzY_fQbegSt2NPDwXfJeq6Q&s"));
     
-    ultimaBusqueda.add(UsuariosUltimaBusqueda("Abraham", "Programador", 4.3, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Doctor"));
-    ultimaBusqueda.add(UsuariosUltimaBusqueda("Eduardo", "Programador", 4.5, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Maestro"));
-    ultimaBusqueda.add(UsuariosUltimaBusqueda("Roberto", "Programador", 4.0, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Fontanero"));
-    ultimaBusqueda.add(UsuariosUltimaBusqueda("Jose Angel", "Programador", 5.0, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Fotografo"));
-    ultimaBusqueda.add(UsuariosUltimaBusqueda("Margarita", "Programador", 4.3, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Pintor"));
-    ultimaBusqueda.add(UsuariosUltimaBusqueda("Karen", "Programador", 4.5, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Arquitecto"));
-    ultimaBusqueda.add(UsuariosUltimaBusqueda("Guadalupe", "Programador", 4.0, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Repartidor"));
-    ultimaBusqueda.add(UsuariosUltimaBusqueda("Daniel", "Programador", 5.0, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Contratista"));
+    ultimaBusqueda.add(UsuariosUltimaBusqueda("Abraham Olvera Santos", "Programador", 4.3, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Doctor"));
+    ultimaBusqueda.add(UsuariosUltimaBusqueda("Eduardo Soriano Lopez", "Programador", 4.5, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Maestro"));
+    ultimaBusqueda.add(UsuariosUltimaBusqueda("Roberto Garcia Martinez", "Programador", 4.0, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Fontanero"));
+    ultimaBusqueda.add(UsuariosUltimaBusqueda("Jose Angel Gonzalez Terron", "Programador", 5.0, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Fotografo"));
+    ultimaBusqueda.add(UsuariosUltimaBusqueda("Margarita de Jesus Vela Cruz", "Programador", 4.3, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Pintor"));
+    ultimaBusqueda.add(UsuariosUltimaBusqueda("Karen de Soriano ", "Programador", 4.5, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Arquitecto"));
+    ultimaBusqueda.add(UsuariosUltimaBusqueda("Guadalupe Janet Romero Garcia", "Programador", 4.0, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Repartidor"));
+    ultimaBusqueda.add(UsuariosUltimaBusqueda("Daniel Guadalupe Romero Sainz", "Programador", 5.0, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Contratista"));
     
 
     return SingleChildScrollView(
       child: Container(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -129,19 +130,25 @@ Widget crearCardUltimaBusquedasUsuarios(UsuariosUltimaBusqueda usuarioActual){
   final double width = size.width;
   final double height = size.height;
 
-  return  Card(
-    elevation: 2.0,
-    margin: const EdgeInsets.all(7.0),
-    color: Colors.white,
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(usuarioActual.nombre,style: StaticAttributesUtils.estilosSimpleTexto()),
-        Image.network(usuarioActual.imagen,width: width/5,height:(height/8)),
-        Text(usuarioActual.especialidad,style: StaticAttributesUtils.estilosSimpleTexto()),
-        ratingBarFunction(usuarioActual)
-      ],
+  return  SizedBox(
+    width: 250.0,
+    child: GestureDetector(
+      onTap: () => Navigator.pushNamed(context, '/detalles_servicio_usuario',arguments: usuarioActual),
+      child: Card(
+        elevation: 2.0,
+        margin: const EdgeInsets.all(7.0),
+        color: Colors.white,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(usuarioActual.nombre,style: StaticAttributesUtils.estilosSimpleTexto(),maxLines: 1,overflow: TextOverflow.ellipsis),
+            Image.network(usuarioActual.imagen,width: width/5,height:(height/8)),
+            Text(usuarioActual.especialidad,style: StaticAttributesUtils.estilosSimpleTexto()),
+            ratingBarFunction(usuarioActual)
+          ],
+        ),
+      ),
     ),
   );
 }
@@ -184,37 +191,28 @@ Widget crearGrid(){
       children: [
         for(TopBusquedas i in busquedas)
           cardTopService(width, height,i),
-          Card(
-          color: Colors.white,
-          margin: const EdgeInsets.all(7.0),
-          elevation: 2.0,
-          child: SizedBox(
-            height: height/6.8,
-            width: width/5,
-            child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.add,color: Colors.black,),
-                      Text("Mostrar mas",style: StaticAttributesUtils.estilosSimpleTexto())
-                    ],
-                    ),
-          ),
-        )
       ],
   );
 }
 
 Widget cardTopService(double width, double height, TopBusquedas busqueda) {
-  return Card(
-    color: Colors.white,
-    margin: const EdgeInsets.all(7.0),
-    elevation: 2.0,
-    child: Column(
-                  children: [
-                    Image.network(busqueda.urlImagen,width: width/5,height:(height/8)),
-                    Text(busqueda.nombre,style: StaticAttributesUtils.estilosSimpleTexto(),)
-                  ],
-        ),
+  return SizedBox(
+    width: 150.0,
+    child: Card(
+      color: Colors.white,
+      margin: const EdgeInsets.all(7.0),
+      elevation: 2.0,
+      child: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Column(
+                      children: [
+                        Image.network(busqueda.urlImagen,width: width/5,height:(height/8)),
+                        Text(busqueda.nombre,style: StaticAttributesUtils.estilosSimpleTexto(),
+                        maxLines: 1,overflow: TextOverflow.ellipsis,)
+                      ],
+            ),
+      ),
+    ),
   );
 }
 
@@ -236,46 +234,47 @@ Widget cardTopService(double width, double height, TopBusquedas busqueda) {
               child: Text("Ultimos servicios contratados",style: StaticAttributesUtils.estiloTitulos()),
             ),
             const Divider(),
-             SingleChildScrollView(
-              padding: const EdgeInsets.all(7.0),
-              child: Column(
-                  children: [
-                    for(var index in ultimaBusqueda)
-                     columnLastCard(index, width, height)
-                ]
-              )
-             )
-                ] ,
-            )
+            Column(
+              children: [
+                for(var index in ultimaBusqueda)
+                  columnLastCard(index, width, height)
+            ]
+          )
+          ] ,
+        )
     );
   }
 
   Widget columnLastCard(UsuariosUltimaBusqueda index,double width,double height) {
     return Card(
+
       color: Colors.white,
       elevation: 2.0,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Image.network(index.imagen,width: width/5,height:(height/8)),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Text(index.nombre,style: StaticAttributesUtils.estiloTitulos()),
-              Text(index.oficio,style: StaticAttributesUtils.estiloTitulos()),
-              Text(index.especialidad,style: StaticAttributesUtils.estiloTitulos()),
-              ratingBarFunction(index),
-            ],
+          Flexible(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(index.nombre,style: StaticAttributesUtils.estiloTitulos(),maxLines: 1,overflow: TextOverflow.ellipsis,),
+                Text(index.oficio,style: StaticAttributesUtils.estilosSimpleTexto()),
+                Text(index.especialidad,style: StaticAttributesUtils.estilosSimpleTexto()),
+                ratingBarFunction(index),
+              ],
+            ),
           )
         ],
       ),
     );
-  } 
+  }
+  
+  @override
+  bool get wantKeepAlive => true;
 
 
 }

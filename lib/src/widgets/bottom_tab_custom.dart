@@ -7,27 +7,23 @@ class CustomBottomNavigator extends StatelessWidget {
   Widget build(BuildContext context) {
     return  ColoredBox(
       color: Colors.amber.shade400,
-      child: const TabBar(
+      child: TabBar(
                 tabs: [
-                  Tab(icon: Padding(
+                  const Tab(icon: Padding(
                     padding: EdgeInsets.all(10.0),
                     child:Icon(
                       Icons.home,color: Colors.black)
                       )
                     ),
-                  Tab(icon: Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child:Icon(
-                      Icons.search,color: Colors.black)
-                      )
-                    ),
                     Tab(icon: Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child:Icon(
-                      Icons.chat,color: Colors.black)
+                    padding: const EdgeInsets.all(10.0),
+                    child:Badge.count(count: 6,
+                      child:const Icon(
+                        Icons.chat,color: Colors.black),
+                    )
                       ),
                     ),
-                  Tab(icon: Padding(
+                  const Tab(icon: Padding(
                     padding: EdgeInsets.all(10.0),
                     child:Icon(
                       Icons.perm_contact_calendar,color: Colors.black)
