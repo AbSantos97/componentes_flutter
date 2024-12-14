@@ -50,12 +50,12 @@ class StaticAttributesUtils{
     );
   }
 
-  static TextStyle estilosSimpleTextoNegritas(){
-    return const TextStyle(
+  static TextStyle estilosSimpleTextoNegritas(double size){
+    return TextStyle(
       fontWeight: FontWeight.bold,
       color: Colors.black,
       fontStyle: FontStyle.normal,
-      fontSize: 15
+      fontSize: size
     );
   }
 
@@ -67,5 +67,19 @@ class StaticAttributesUtils{
       decoration: TextDecoration.underline,
       fontSize: 15
     );
+  }
+
+  static ButtonStyle estiloOutlineButton(double padding){
+    return ElevatedButton.styleFrom(
+      shadowColor: Colors.white,
+      backgroundColor: Colors.black,
+      minimumSize: const Size(88, 36),
+      padding: EdgeInsets.symmetric(horizontal: padding),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10)
+        ),
+      ),
+    ); 
   }
 }

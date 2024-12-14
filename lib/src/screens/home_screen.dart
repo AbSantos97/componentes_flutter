@@ -3,6 +3,7 @@ import 'package:componentes_basicos/src/models/usuarios_ultima_busqueda.dart';
 import 'package:componentes_basicos/src/static/static_attributes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+//import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class HomeScreen extends StatefulWidget {
 
@@ -16,6 +17,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMixin<HomeScreen>{
   List<TopBusquedas> busquedas = List.empty(growable: true);
   List<UsuariosUltimaBusqueda> ultimaBusqueda = List.empty(growable: true);
+  //final _storage = const FlutterSecureStorage(aOptions: AndroidOptions(encryptedSharedPreferences: true ));
+  
 
   @override
   Widget build(BuildContext context) {
@@ -89,9 +92,6 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
     );
 }
 
-void onPressCallback(){
-
-}
 
 Widget crearRowUltimaBusqueda(){
   return  Card(
@@ -133,7 +133,10 @@ Widget crearCardUltimaBusquedasUsuarios(UsuariosUltimaBusqueda usuarioActual){
   return  SizedBox(
     width: 250.0,
     child: GestureDetector(
-      onTap: () => Navigator.pushNamed(context, '/detalles_servicio_usuario',arguments: usuarioActual),
+      onTap: () async { 
+        //String? token = await _storage.read(key: "token");
+        Navigator.pushNamed(context, '/detalles_servicio_usuario',arguments: usuarioActual);
+        },
       child: Card(
         elevation: 2.0,
         margin: const EdgeInsets.all(7.0),

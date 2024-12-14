@@ -1,3 +1,5 @@
+import 'package:componentes_basicos/src/connections/http_request.dart';
+import 'package:componentes_basicos/src/models/especialidades_por_servicio.dart';
 import 'package:componentes_basicos/src/models/usuarios_ultima_busqueda.dart';
 import 'package:componentes_basicos/src/static/static_attributes.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,8 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+
+  HttpRequest httpRequest = HttpRequest();
   
   List<UsuariosUltimaBusqueda> usuariosUltimaBusqueda = List.empty(growable: true);
 
@@ -23,6 +27,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('ConectaLabores', textAlign: TextAlign.end, style: TextStyle(color: Colors.black87)),
       ),
@@ -41,25 +46,49 @@ class _SearchScreenState extends State<SearchScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        valueOficioInput == ""?Container():createChip(valueOficioInput),
-                        valueOfSpeciality == ""?Container():createChip(valueOfSpeciality),
+                        valueOficioInput == ""?Container():createChip(valueOficioInput,funcionLimpiarJob),
+                        valueOfSpeciality == ""?Container():createChip(valueOfSpeciality,funcionLimpiarEspecialidad),
                         
                       ],
                     ),
                   ),
-                   valueOficioInput == "" || valueOfSpeciality == ""?Center(
+                   valueOficioInput == "" && valueOfSpeciality == ""?Center(
                     child: Image.asset("assets/images/busqueda_gif.gif"),
                      ):_listarTrabajadores()
-                  
                 ],
               ),
           ),
       ),
-      
     );
   }
 
-  Widget createChip(String value){
+  void funcionLimpiarJob(){
+    valueOficioInput = "";
+    valueOfSpeciality = "";
+    oficioController.text = "";
+    _dropdownValue = "Seleccione una opción";
+    _listOfEspecialization.clear();
+    _listOfEspecialization.add("Seleccione una opción");
+
+    setState(() {
+      _dropdownValue;
+      _listOfEspecialization;
+      valueOficioInput;
+    });
+  }
+
+  void funcionLimpiarEspecialidad(){
+    valueOfSpeciality = "";
+    _dropdownValue = "Seleccione una opción";
+    setState(() {
+      _dropdownValue;
+      valueOfSpeciality;
+    });
+
+    //Actualizat la lista de los trabajadores
+  }
+
+  Widget createChip(String value, VoidCallback onDeleteEvent){
     return Container(
       margin: const EdgeInsets.all(10.0),
       child: Chip(
@@ -69,9 +98,7 @@ class _SearchScreenState extends State<SearchScreen> {
         deleteIcon: const Icon(Icons.highlight_remove_sharp),
         label: Text(value,style: StaticAttributesUtils.estilosSimpleTexto(),maxLines: 1,overflow: TextOverflow.ellipsis),
         deleteIconColor: Colors.black,
-        onDeleted: () {
-          
-        },
+        onDeleted: onDeleteEvent,
         labelStyle:  StaticAttributesUtils.estilosSimpleTexto(),
         ),
     );
@@ -178,10 +205,11 @@ class _SearchScreenState extends State<SearchScreen> {
               icon: const Icon(Icons.arrow_drop_down),
               items: _listOfEspecialization.map<DropdownMenuItem<String>>(
                 (String elem) => _createDropDowmMenuItem(elem)).toList(),
-              onChanged: (String? value) {
+              onChanged: (String? value) async {
+                 _dropdownValue = value!;
+                valueOfSpeciality = value;
                 setState(() {
-                  _dropdownValue = value!;
-                  valueOfSpeciality = value;
+                  valueOfSpeciality;
                 });
               },
             ),
@@ -214,7 +242,9 @@ class _SearchScreenState extends State<SearchScreen> {
         const SizedBox(width: 10.0),
           Container(
             margin: const EdgeInsets.only(top: 12.0,right: 10.0),
-            child: IconButton(onPressed: () => _llenarLista(),
+            child: IconButton(onPressed: () async {
+                _llenarLista();
+            } ,
             color: Colors.black,
              icon: const Icon(Icons.search),
              tooltip: "Buscar",
@@ -230,18 +260,14 @@ class _SearchScreenState extends State<SearchScreen> {
     return DropdownMenuItem(value:item, enabled: enabled, child: Text(item,style: StaticAttributesUtils.estilosSimpleTexto()));
   }  
 
-  void _llenarLista(){
+  void _llenarLista() async {
     valueOficioInput = oficioController.text;
+
     _dropdownValue = "Seleccione una opción";
     _listOfEspecialization.clear();
     _listOfEspecialization.add("Seleccione una opción");
-    _listOfEspecialization.add("Backend developer");
-    _listOfEspecialization.add("Frontend developer");
-    _listOfEspecialization.add("Fullstack developer");
-    _listOfEspecialization.add("Cloud developer");
-    _listOfEspecialization.add("BigData developer");
-    _listOfEspecialization.add("Support developer");
-    _listOfEspecialization.add("Networking developer");
+    List<EspecialidadesPorServicio> lista = await httpRequest.getEspecialidadesByFilter(valueOficioInput);
+    _listOfEspecialization.addAll(lista.map((e) => e.nombre).toSet().toList());
     setState(() {
       _dropdownValue;
       _listOfEspecialization;

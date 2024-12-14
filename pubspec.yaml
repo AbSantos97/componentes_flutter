@@ -40,7 +40,12 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   carousel_slider: ^5.0.0
   http: ^1.2.2
-
+  flutter_secure_storage: ^9.2.2
+  image_picker: ^1.1.2
+  loading_animation_widget: ^1.3.0
+  blur: ^4.0.0
+  flutter_launcher_icons: ^0.14.1
+ 
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +78,7 @@ flutter:
   - assets/images/portafolio-profesional.png
   - assets/images/comunicacion.png
   - assets/images/busqueda_gif.gif
+  - assets/images/logo.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

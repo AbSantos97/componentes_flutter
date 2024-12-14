@@ -165,7 +165,7 @@ class _CrearCuentaUsuarioComunState extends State<CrearCuentaUsuarioComun> {
       initialEntryMode: DatePickerEntryMode.calendarOnly,
       firstDate: DateTime.now().subtract(const Duration(days: 25550)),
       currentDate: fechaSeleccionada,
-      helpText: "Fecha de inicio",
+      helpText: "Fecha de nacimiento",
       confirmText: "Aceptar",
       cancelText: "Cancelar",
       lastDate: DateTime.now().add(const Duration(days: 1)), 

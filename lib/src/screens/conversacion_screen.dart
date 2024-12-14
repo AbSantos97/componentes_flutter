@@ -18,37 +18,37 @@ class _ConversacionScreenState extends State<ConversacionScreen> {
   Widget build(BuildContext context) {
 
     msg.add(ConversacionChat("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum elit felis, pulvinar porta accumsan et",
-     "cliente", "trabajador", false));
-     msg.add(ConversacionChat("Pellentesque ex dui, iaculis id quam eget, lobortis ornare augue. Integer malesuada varius tempor. Vivamus vel eros eu dui ornare rutrum a in nunc. Sed posuere id elit at dictum. Fusce nulla tortor, auctor sit amet metus sodales",
-     "cliente", "trabajador", false));
-     msg.add(ConversacionChat("ultrices elementum purus. Sed in magna ut elit suscipit posuere quis cursus sem. Curabitur ullamcorper ultricies quam in malesuada.",
-     "trabajador", "cliente", false));
-     msg.add(ConversacionChat("Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque eu magna bibendum nisl maximus ultrices tincidunt vel metus. Cras sollicitudin sed massa vitae egestas. Nam luctus elit egestas vulputate gravida",
-     "trabajador", "cliente", false));
-     msg.add(ConversacionChat(" Aliquam tempus neque ut consequat scelerisque. Ut volutpat, turpis non porta consectetur, tortor augue mollis dui, in euismod ex justo sit amet turpis. ",
-     "cliente", "trabajador", false));
-     msg.add(ConversacionChat("Ut et mollis ex. Nunc scelerisque elit leo, in dictum velit fermentum a. Nam maximus blandit velit sed finibus. Donec vehicula, massa eu placerat malesuada, est quam pharetra ligula, nec sollicitudin est turpis sit amet nibh. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc nec velit eu erat commodo porta eget sed nunc.",
-     "trabajador", "cliente", false));
-     msg.add(ConversacionChat("Praesent fermentum tellus erat, in dignissim nisl scelerisque et. Sed efficitur in nunc ac condimentum. Donec interdum aliquam sapien, sit amet finibus ante suscipit in. Sed eu lorem ex.",
-     "cliente", "trabajador", false));
-     msg.add(ConversacionChat("Duis ac blandit neque. Duis tempus molestie tellus nec convallis. Nullam libero velit, ultrices ac nisl sed, volutpat malesuada ipsum. Pellentesque venenatis elit mauris, quis facilisis nisl feugiat sit amet.",
-     "trabajador", "cliente", false));
-     msg.add(ConversacionChat("Mauris eget placerat arcu, rhoncus accumsan massa. Phasellus risus sapien, vestibulum at pharetra sed, dignissim sit amet lorem. Aliquam vitae rhoncus felis, in interdum nisl. Donec lobortis odio justo, sit amet viverra tortor blandit at. Nunc a elementum dolor.",
-     "cliente", "trabajador", false));
-     msg.add(ConversacionChat("Maecenas quis tincidunt ipsum, id vestibulum magna. Donec pretium, mi ut bibendum placerat, lectus eros feugiat odio",
-     "trabajador", "cliente", false));
-     msg.add(ConversacionChat("ut aliquam nisl erat vel ante. Ut semper blandit enim, non tempor felis mollis sed",
-     "cliente", "trabajador", false));
-     msg.add(ConversacionChat("Duis egestas risus blandit justo porttitor, nec laoreet diam porttitor. Pellentesque efficitur sagittis pharetra",
-     "cliente", "trabajador", false));
-     msg.add(ConversacionChat("Maecenas quis tincidunt ipsum, id vestibulum magna. Donec pretium, mi ut bibendum placerat, lectus eros feugiat odio",
-     "trabajador", "cliente", true));
-     msg.add(ConversacionChat("Maecenas quis tincidunt ipsum, id vestibulum magna. Donec pretium, mi ut bibendum placerat, lectus eros feugiat odio",
-     "trabajador", "cliente", true));
-      msg.add(ConversacionChat("Maecenas quis tincidunt ipsum, id vestibulum magna. Donec pretium, mi ut bibendum placerat, lectus eros feugiat odio",
-     "trabajador", "cliente", true));
-     msg.add(ConversacionChat("Maecenas quis tincidunt ipsum, id vestibulum magna. Donec pretium, mi ut bibendum placerat, lectus eros feugiat odio",
-     "trabajador", "cliente", true));
+    "cliente", "trabajador", false));
+    msg.add(ConversacionChat("Pellentesque ex dui, iaculis id quam eget, lobortis ornare augue. Integer malesuada varius tempor. Vivamus vel eros eu dui ornare rutrum a in nunc. Sed posuere id elit at dictum. Fusce nulla tortor, auctor sit amet metus sodales",
+    "cliente", "trabajador", false));
+    msg.add(ConversacionChat("ultrices elementum purus. Sed in magna ut elit suscipit posuere quis cursus sem. Curabitur ullamcorper ultricies quam in malesuada.",
+    "trabajador", "cliente", false));
+    msg.add(ConversacionChat("Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque eu magna bibendum nisl maximus ultrices tincidunt vel metus. Cras sollicitudin sed massa vitae egestas. Nam luctus elit egestas vulputate gravida",
+    "trabajador", "cliente", false));
+    msg.add(ConversacionChat(" Aliquam tempus neque ut consequat scelerisque. Ut volutpat, turpis non porta consectetur, tortor augue mollis dui, in euismod ex justo sit amet turpis. ",
+    "cliente", "trabajador", false));
+    msg.add(ConversacionChat("Ut et mollis ex. Nunc scelerisque elit leo, in dictum velit fermentum a. Nam maximus blandit velit sed finibus. Donec vehicula, massa eu placerat malesuada, est quam pharetra ligula, nec sollicitudin est turpis sit amet nibh. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc nec velit eu erat commodo porta eget sed nunc.",
+    "trabajador", "cliente", false));
+    msg.add(ConversacionChat("Praesent fermentum tellus erat, in dignissim nisl scelerisque et. Sed efficitur in nunc ac condimentum. Donec interdum aliquam sapien, sit amet finibus ante suscipit in. Sed eu lorem ex.",
+    "cliente", "trabajador", false));
+    msg.add(ConversacionChat("Duis ac blandit neque. Duis tempus molestie tellus nec convallis. Nullam libero velit, ultrices ac nisl sed, volutpat malesuada ipsum. Pellentesque venenatis elit mauris, quis facilisis nisl feugiat sit amet.",
+    "trabajador", "cliente", false));
+    msg.add(ConversacionChat("Mauris eget placerat arcu, rhoncus accumsan massa. Phasellus risus sapien, vestibulum at pharetra sed, dignissim sit amet lorem. Aliquam vitae rhoncus felis, in interdum nisl. Donec lobortis odio justo, sit amet viverra tortor blandit at. Nunc a elementum dolor.",
+    "cliente", "trabajador", false));
+    msg.add(ConversacionChat("Maecenas quis tincidunt ipsum, id vestibulum magna. Donec pretium, mi ut bibendum placerat, lectus eros feugiat odio",
+    "trabajador", "cliente", false));
+    msg.add(ConversacionChat("ut aliquam nisl erat vel ante. Ut semper blandit enim, non tempor felis mollis sed",
+    "cliente", "trabajador", false));
+    msg.add(ConversacionChat("Duis egestas risus blandit justo porttitor, nec laoreet diam porttitor. Pellentesque efficitur sagittis pharetra",
+    "cliente", "trabajador", false));
+    msg.add(ConversacionChat("Maecenas quis tincidunt ipsum, id vestibulum magna. Donec pretium, mi ut bibendum placerat, lectus eros feugiat odio",
+    "trabajador", "cliente", true));
+    msg.add(ConversacionChat("Maecenas quis tincidunt ipsum, id vestibulum magna. Donec pretium, mi ut bibendum placerat, lectus eros feugiat odio",
+    "trabajador", "cliente", true));
+    msg.add(ConversacionChat("Maecenas quis tincidunt ipsum, id vestibulum magna. Donec pretium, mi ut bibendum placerat, lectus eros feugiat odio",
+    "trabajador", "cliente", true));
+    msg.add(ConversacionChat("Maecenas quis tincidunt ipsum, id vestibulum magna. Donec pretium, mi ut bibendum placerat, lectus eros feugiat odio",
+    "trabajador", "cliente", true));
 
     
 
@@ -67,7 +67,7 @@ class _ConversacionScreenState extends State<ConversacionScreen> {
           ),
           centerTitle: true,
           actions: [
-            IconButton(onPressed: (){}, icon: const Icon(Icons.handshake), tooltip: "Iniciar contrato")
+            IconButton(onPressed: iniciarContrato, icon: const Icon(Icons.handshake), tooltip: "Iniciar contrato")
           ],
         ),
         body: Column(
@@ -122,7 +122,6 @@ class _ConversacionScreenState extends State<ConversacionScreen> {
           borderRadius: BorderRadius.circular(20.0),
           child: Badge(
             backgroundColor: Colors.red,
-            label: Text(""),
             isLabelVisible: msg.esNuevo && msg.remitenteId != "cliente",
             child: Container(
               width: width-120.0,
@@ -136,5 +135,10 @@ class _ConversacionScreenState extends State<ConversacionScreen> {
         ),
       ),
     );
+  }
+
+  void iniciarContrato(){
+    Navigator.pushNamed(context, '/form_contrato');
+
   }
 }

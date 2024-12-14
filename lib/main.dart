@@ -3,9 +3,12 @@ import 'package:componentes_basicos/src/design/WidgetStatePropertyOutlineBorderD
 import 'package:componentes_basicos/src/screens/conversacion_screen.dart';
 import 'package:componentes_basicos/src/screens/counter_screen.dart';
 import 'package:componentes_basicos/src/screens/crear_cuenta_inicial.dart';
+import 'package:componentes_basicos/src/screens/datos_generales_contratos.dart';
+import 'package:componentes_basicos/src/screens/editar_datos_profile_client.dart';
 import 'package:componentes_basicos/src/screens/http_request_widget.dart';
 import 'package:componentes_basicos/src/screens/information_service.dart';
 import 'package:componentes_basicos/src/screens/login_component.dart';
+import 'package:componentes_basicos/src/screens/profile_view.dart';
 import 'package:componentes_basicos/src/screens/search_screen.dart';
 import 'package:componentes_basicos/src/static/static_attributes.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +38,10 @@ class MyApp extends StatelessWidget {
         '/pagina_busqueda': (context) => const SearchScreen(),
         '/conversacion': (context) => const ConversacionScreen(),
         '/http': (context) => const HttpRequestWidget(),
-        '/crear_cuenta': (context) => const CrearCuentaUsuarioComun()
+        '/crear_cuenta': (context) => const CrearCuentaUsuarioComun(),
+        '/info_profile': (context) => const ProfileViewUser(),
+        '/edit_client_profile': (context) => const EditarDatosProfileClient(),
+        '/form_contrato': (context) => const DatosGeneralesContratos()
       },
       supportedLocales: const [
          Locale('es'),

@@ -138,9 +138,7 @@ class _InformationServiceState extends State<InformationService> {
     );
     return OutlinedButton(
       style: raisedButtonStyle,
-      onPressed: () {
-        debugPrint('Received click');
-      },
+      onPressed: () => Navigator.pushNamed(context,"/conversacion"),
       child: Text('Iniciar contacto.',style: StaticAttributesUtils.estilosSimpleTexto()),
     );
   }

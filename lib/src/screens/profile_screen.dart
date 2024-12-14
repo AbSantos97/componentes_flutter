@@ -17,7 +17,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            _createRowPersonalData("Perfil","assets/images/portafolio-profesional.png"),
+
+            GestureDetector(
+              onTap: () => Navigator.pushNamed(context, "/info_profile"),
+              child: _createRowPersonalData("Perfil","assets/images/portafolio-profesional.png")
+            ),
             _createRowPersonalData("Contratos finalizados","assets/images/camaraderia.png"),
             _createRowPersonalData("Contratos en proceso","assets/images/licencias.png"),
             _createRowPersonalData("Metodos de pago","assets/images/metodo-de-pago.png"),

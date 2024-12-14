@@ -6,9 +6,10 @@ class InicioSesionResult {
     final String ?secondLastName;
     final String token;
     final String role;
+    final String id;
     final String errorMessage;
 
-    const InicioSesionResult.success({required this.firstName,required this.firstLastName,
+    const InicioSesionResult.success({required this.id, required this.firstName,required this.firstLastName,
     required this.secondLastName,required  this.role,required this.token}):errorMessage="";
 
     const InicioSesionResult.fail({required this.errorMessage}):
@@ -16,10 +17,12 @@ class InicioSesionResult {
     secondLastName="",
     firstName="",
     token="",
-    role="";
+    role="",
+    id="";
 
     factory InicioSesionResult.fromJson200(Map<String,dynamic> json) 
     => InicioSesionResult.success(
+      id: json['id'],
       firstName: json['first_name'],
       firstLastName: json['first_last_name'],
       secondLastName: json['second_last_name'],
