@@ -25,8 +25,10 @@ class _SimpleCampoTextoState extends State<SimpleCampoTexto> {
       controller: modeloCampo.defaultController,
       obscureText: modeloCampo.obscureText,
       keyboardType: modeloCampo.tipo,
+      minLines: 1,
+      maxLines: modeloCampo.longitudCampo > 50?4:1,
       autovalidateMode: AutovalidateMode.onUnfocus,
-      validator: (value) => validateText(value, modeloCampo.mensajeError),
+      validator: (value) => modeloCampo.requerido?validateText(value, modeloCampo.mensajeError):null,
       decoration: InputDecoration(
         suffixIcon: modeloCampo.passwordType?IconButton(onPressed: () => {
           setState(() {

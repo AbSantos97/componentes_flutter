@@ -182,7 +182,7 @@ class _EditarDatosProfileClientState extends State<EditarDatosProfileClient> {
                             ),
 
                             OutlinedButton(
-                              style: StaticAttributesUtils.estiloOutlineButton(45),
+                              style: StaticAttributesUtils.estiloOutlineButton(45,Colors.black),
                               onPressed: callSaveFunction, 
                               child: Text("Guardar",style: StaticAttributesUtils.estilosSimpleTextoColorAlternativo())
                             )

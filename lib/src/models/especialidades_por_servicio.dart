@@ -9,7 +9,7 @@ class EspecialidadesPorServicio {
   const EspecialidadesPorServicio.error({ required this.errorMessage}):id=0,nombre="";
 
   factory EspecialidadesPorServicio.fromJson200(Map<String,dynamic> json)
-    => EspecialidadesPorServicio.success(id: json['id'], nombre: json['name']);
+    => EspecialidadesPorServicio.success(id: json['id'], nombre: json['description']);
   
 
 }

@@ -45,14 +45,14 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
     busquedas.add(TopBusquedas("Veterinario", "https://static.vecteezy.com/system/resources/previews/005/520/216/non_2x/cartoon-drawing-of-a-veterinarian-vector.jpg"));
     busquedas.add(TopBusquedas("Programador", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSohxFzkTL45WgEzY_fQbegSt2NPDwXfJeq6Q&s"));
     
-    ultimaBusqueda.add(UsuariosUltimaBusqueda("Abraham Olvera Santos", "Programador", 4.3, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Doctor"));
-    ultimaBusqueda.add(UsuariosUltimaBusqueda("Eduardo Soriano Lopez", "Programador", 4.5, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Maestro"));
-    ultimaBusqueda.add(UsuariosUltimaBusqueda("Roberto Garcia Martinez", "Programador", 4.0, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Fontanero"));
-    ultimaBusqueda.add(UsuariosUltimaBusqueda("Jose Angel Gonzalez Terron", "Programador", 5.0, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Fotografo"));
-    ultimaBusqueda.add(UsuariosUltimaBusqueda("Margarita de Jesus Vela Cruz", "Programador", 4.3, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Pintor"));
-    ultimaBusqueda.add(UsuariosUltimaBusqueda("Karen de Soriano ", "Programador", 4.5, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Arquitecto"));
-    ultimaBusqueda.add(UsuariosUltimaBusqueda("Guadalupe Janet Romero Garcia", "Programador", 4.0, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Repartidor"));
-    ultimaBusqueda.add(UsuariosUltimaBusqueda("Daniel Guadalupe Romero Sainz", "Programador", 5.0, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Contratista"));
+    ultimaBusqueda.add(const UsuariosUltimaBusqueda("Abraham Olvera Santos", "Programador", 4.3, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Doctor"));
+    ultimaBusqueda.add(const UsuariosUltimaBusqueda("Eduardo Soriano Lopez", "Programador", 4.5, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Maestro"));
+    ultimaBusqueda.add(const UsuariosUltimaBusqueda("Roberto Garcia Martinez", "Programador", 4.0, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Fontanero"));
+    ultimaBusqueda.add(const UsuariosUltimaBusqueda("Jose Angel Gonzalez Terron", "Programador", 5.0, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Fotografo"));
+    ultimaBusqueda.add(const UsuariosUltimaBusqueda("Margarita de Jesus Vela Cruz", "Programador", 4.3, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Pintor"));
+    ultimaBusqueda.add(const UsuariosUltimaBusqueda("Karen de Soriano ", "Programador", 4.5, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Arquitecto"));
+    ultimaBusqueda.add(const UsuariosUltimaBusqueda("Guadalupe Janet Romero Garcia", "Programador", 4.0, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Repartidor"));
+    ultimaBusqueda.add(const UsuariosUltimaBusqueda("Daniel Guadalupe Romero Sainz", "Programador", 5.0, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Contratista"));
     
 
     return SingleChildScrollView(
@@ -135,7 +135,7 @@ Widget crearCardUltimaBusquedasUsuarios(UsuariosUltimaBusqueda usuarioActual){
     child: GestureDetector(
       onTap: () async { 
         //String? token = await _storage.read(key: "token");
-        Navigator.pushNamed(context, '/detalles_servicio_usuario',arguments: usuarioActual);
+        //Navigator.pushNamed(context, '/detalles_servicio_usuario',arguments: usuarioActual);
         },
       child: Card(
         elevation: 2.0,
@@ -250,7 +250,6 @@ Widget cardTopService(double width, double height, TopBusquedas busqueda) {
 
   Widget columnLastCard(UsuariosUltimaBusqueda index,double width,double height) {
     return Card(
-
       color: Colors.white,
       elevation: 2.0,
       child: Row(
@@ -264,7 +263,7 @@ Widget cardTopService(double width, double height, TopBusquedas busqueda) {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(index.nombre,style: StaticAttributesUtils.estiloTitulos(),maxLines: 1,overflow: TextOverflow.ellipsis,),
+                Text(index.nombre,style: StaticAttributesUtils.estiloTitulos(),maxLines: 1,overflow: TextOverflow.ellipsis),
                 Text(index.oficio,style: StaticAttributesUtils.estilosSimpleTexto()),
                 Text(index.especialidad,style: StaticAttributesUtils.estilosSimpleTexto()),
                 ratingBarFunction(index),

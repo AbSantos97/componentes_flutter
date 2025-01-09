@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                    margin: const EdgeInsets.fromLTRB(0.0, 5.0, 30.0, 10.0),
                   child: Align(
                     alignment: Alignment.centerRight,
-                    child: Text("Olvide mi contraseña",style: StaticAttributesUtils.estilosSimpleTextoNegritas(15),)),
+                    child: Text("Olvidé mi contraseña",style: StaticAttributesUtils.estilosSimpleTextoNegritas(15),)),
                 ),
           
                 _crearBotonIniciarContacto(),
@@ -69,14 +69,14 @@ class _LoginScreenState extends State<LoginScreen> {
           
                 Align(
                   alignment: Alignment.bottomCenter,
-                  child: _crearSimpleTexto("¿Aun no tienes cuenta?", StaticAttributesUtils.estilosSimpleTexto())
+                  child: _crearSimpleTexto("¿Aún no tienes cuenta?", StaticAttributesUtils.estilosSimpleTexto())
                 ),
                 
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: TextButton(
                     onPressed: () => Navigator.pushNamed(context, "/crear_cuenta"), 
-                    child: _crearSimpleTexto("Registrate", StaticAttributesUtils.estilosSimpleTextoNegritasSubrayado())
+                    child: _crearSimpleTexto("Regístrate", StaticAttributesUtils.estilosSimpleTextoNegritasSubrayado())
                   )
                 )
           
@@ -118,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: SizedBox(
         width: double.infinity,
         child: OutlinedButton(
-                style: StaticAttributesUtils.estiloOutlineButton(16),
+                style: StaticAttributesUtils.estiloOutlineButton(16,Colors.black),
                 onPressed: () async {
                   bool goAhead = await ejecutarLogin();
                   if(goAhead && context.mounted){

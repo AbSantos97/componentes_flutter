@@ -117,7 +117,7 @@ class _ProfileViewUserState extends State<ProfileViewUser> {
               const SizedBox(height: 15.0),
               Text("Fecha de nacimiento:", style: StaticAttributesUtils.estilosSimpleTextoNegritas(19)),
               const SizedBox(height: 15.0),
-              Text(userData.birthday),
+              Text(_transformarFechaAString(userData.birthday)),
                const Divider(),
               
             ],
@@ -125,5 +125,12 @@ class _ProfileViewUserState extends State<ProfileViewUser> {
         ),
       )
     );
+  }
+
+  String _transformarFechaAString(String date){
+    DateTime dateTime = DateTime.parse(date);
+    String dia = dateTime.day < 10?'0${dateTime.day}':dateTime.day.toString();
+    String mes = dateTime.month <10?'0${dateTime.month}':dateTime.month.toString();
+    return '$dia-$mes-${dateTime.year}';
   }
 }

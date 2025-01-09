@@ -128,7 +128,7 @@ class _DatosGeneralesContratosState extends State<DatosGeneralesContratos> {
                             ),
 
                             OutlinedButton(
-                              style: StaticAttributesUtils.estiloOutlineButton(45),
+                              style: StaticAttributesUtils.estiloOutlineButton(45,Colors.black),
                               onPressed: callSaveFunction, 
                               child: Text("Generar contrato",style: StaticAttributesUtils.estilosSimpleTextoColorAlternativo())
                             )

@@ -1,10 +1,12 @@
 import 'package:componentes_basicos/src/design/WidgetStatePropertyDatePicker.dart';
 import 'package:componentes_basicos/src/design/WidgetStatePropertyOutlineBorderDatePicker.dart';
+import 'package:componentes_basicos/src/screens/codigo_verificacion.dart';
 import 'package:componentes_basicos/src/screens/conversacion_screen.dart';
 import 'package:componentes_basicos/src/screens/counter_screen.dart';
 import 'package:componentes_basicos/src/screens/crear_cuenta_inicial.dart';
 import 'package:componentes_basicos/src/screens/datos_generales_contratos.dart';
 import 'package:componentes_basicos/src/screens/editar_datos_profile_client.dart';
+import 'package:componentes_basicos/src/screens/formulario_trabajador.dart';
 import 'package:componentes_basicos/src/screens/http_request_widget.dart';
 import 'package:componentes_basicos/src/screens/information_service.dart';
 import 'package:componentes_basicos/src/screens/login_component.dart';
@@ -12,10 +14,12 @@ import 'package:componentes_basicos/src/screens/profile_view.dart';
 import 'package:componentes_basicos/src/screens/search_screen.dart';
 import 'package:componentes_basicos/src/static/static_attributes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-void main(){
-  runApp(const MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]) .then((_) { runApp(const MyApp()); });
 }
 
 class MyApp extends StatelessWidget {
@@ -41,7 +45,9 @@ class MyApp extends StatelessWidget {
         '/crear_cuenta': (context) => const CrearCuentaUsuarioComun(),
         '/info_profile': (context) => const ProfileViewUser(),
         '/edit_client_profile': (context) => const EditarDatosProfileClient(),
-        '/form_contrato': (context) => const DatosGeneralesContratos()
+        '/form_contrato': (context) => const DatosGeneralesContratos(),
+        '/formulario_trabajador': (context) => const FormularioTrabajador(),
+        '/verificar_codigo_creacion': (context) => const CodigoVerificacionScreen()
       },
       supportedLocales: const [
          Locale('es'),
@@ -50,6 +56,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,    
       theme: ThemeData(
         useMaterial3: true,
+            primaryColor: Colors.green,
+           
         colorScheme: ColorScheme.fromSeed(
           primary: Colors.amber.shade400,
           seedColor: Colors.amber.shade400,
@@ -69,7 +77,8 @@ class MyApp extends StatelessWidget {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
           backgroundColor: WidgetStatePropertyAll(Colors.amber.shade400)
-        )),
+        )
+      ),
       datePickerTheme: DatePickerThemeData(
         backgroundColor: Colors.white,
         headerHeadlineStyle: StaticAttributesUtils.estiloTitulosDatePicker(),
@@ -87,7 +96,7 @@ class MyApp extends StatelessWidget {
           labelStyle: StaticAttributesUtils.estilosSimpleTexto()),
         surfaceTintColor: Colors.white,
         locale: const Locale("es","MX"), 
-        headerForegroundColor: Colors.black)
+        headerForegroundColor: Colors.black),
       ),
     );
   }

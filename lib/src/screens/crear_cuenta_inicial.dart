@@ -18,10 +18,10 @@ class _CrearCuentaUsuarioComunState extends State<CrearCuentaUsuarioComun> {
   TextEditingController textEditingController = TextEditingController();
   
   SimpleCampoTexto nombre = SimpleCampoTexto(ModeloSimpleCampoTexto.mensajeErrorPorDefecto("Nombre", TextInputType.name, 25, true));
-  SimpleCampoTexto apellidoPaterno = SimpleCampoTexto(ModeloSimpleCampoTexto.mensajeErrorPorDefecto("Apellido Paterno", TextInputType.name, 25, true));
-  SimpleCampoTexto apellidoMaterno = SimpleCampoTexto(ModeloSimpleCampoTexto.mensajeErrorPorDefecto("Apellido Materno", TextInputType.name, 25, true));
-  SimpleCampoTexto correoElectronico = SimpleCampoTexto(ModeloSimpleCampoTexto.mensajeErrorPorDefecto("Correo Electronico", TextInputType.emailAddress, 25, true));
-  SimpleCampoTexto numeroTelefonico = SimpleCampoTexto(ModeloSimpleCampoTexto.mensajeErrorPorDefecto("Numero telefonico", TextInputType.number, 25, true));
+  SimpleCampoTexto apellidoPaterno = SimpleCampoTexto(ModeloSimpleCampoTexto.mensajeErrorPorDefecto("Apellido paterno", TextInputType.name, 25, true));
+  SimpleCampoTexto apellidoMaterno = SimpleCampoTexto(ModeloSimpleCampoTexto.mensajeErrorPorDefecto("Apellido materno", TextInputType.name, 25, true));
+  SimpleCampoTexto correoElectronico = SimpleCampoTexto(ModeloSimpleCampoTexto.mensajeErrorPorDefecto("Correo electrónico", TextInputType.emailAddress, 25, true));
+  SimpleCampoTexto numeroTelefonico = SimpleCampoTexto(ModeloSimpleCampoTexto.mensajeErrorPorDefecto("Número telefónico", TextInputType.number, 25, true));
   SimpleCampoTexto contrasena = SimpleCampoTexto(ModeloSimpleCampoTexto.passwordOption("Contraseña", TextInputType.visiblePassword, 16, false, "El campo contraseña es requerido"));
 
   DateTime fechaSeleccionada = DateTime.now();
@@ -29,7 +29,8 @@ class _CrearCuentaUsuarioComunState extends State<CrearCuentaUsuarioComun> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            appBar: AppBar(
+      backgroundColor: Colors.amber.shade400,
+      appBar: AppBar(
       backgroundColor: Colors.amber.shade400,
       centerTitle: true,
       title: const Text('ConectaLabores', textAlign: TextAlign.end, style: TextStyle(color: Colors.black87),),
@@ -103,7 +104,7 @@ class _CrearCuentaUsuarioComunState extends State<CrearCuentaUsuarioComun> {
                       onTap: () async {
                         FocusScope.of(context).requestFocus(FocusNode());
                         DateTime fecha = await _selectDate(context);
-                        // ignore: prefer_interpolation_to_compose_strings
+                        
                         String month = fecha.month <10?'0${fecha.month}':fecha.month.toString();
                         String day = fecha.day < 10?'0${fecha.day}':fecha.day.toString();
                         textEditingController.text = '${fecha.year}-$month-$day';
@@ -156,6 +157,9 @@ class _CrearCuentaUsuarioComunState extends State<CrearCuentaUsuarioComun> {
       // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
          SnackBar(content: Text(response)));
+      if(response == 'El registro se ha hecho de manera correcta'){
+        Navigator.pushReplacementNamed(context, '/verificar_codigo_creacion');
+      }
     }
   }
 

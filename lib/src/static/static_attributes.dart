@@ -38,6 +38,7 @@ class StaticAttributesUtils{
     return const TextStyle(
       color: Colors.black,
       fontStyle: FontStyle.normal,
+      height: 1.3,
       fontSize: 22
     );
   }
@@ -69,10 +70,10 @@ class StaticAttributesUtils{
     );
   }
 
-  static ButtonStyle estiloOutlineButton(double padding){
+  static ButtonStyle estiloOutlineButton(double padding, Color color){
     return ElevatedButton.styleFrom(
       shadowColor: Colors.white,
-      backgroundColor: Colors.black,
+      backgroundColor: color,
       minimumSize: const Size(88, 36),
       padding: EdgeInsets.symmetric(horizontal: padding),
       shape: const RoundedRectangleBorder(

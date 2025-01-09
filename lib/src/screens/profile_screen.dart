@@ -25,7 +25,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             _createRowPersonalData("Contratos finalizados","assets/images/camaraderia.png"),
             _createRowPersonalData("Contratos en proceso","assets/images/licencias.png"),
             _createRowPersonalData("Metodos de pago","assets/images/metodo-de-pago.png"),
-            _createRowPersonalData("Cambiar de perfil - Trabajador","assets/images/comunicacion.png"),
+            GestureDetector(
+              onTap: () => Navigator.pushNamed(context, "/formulario_trabajador"),
+              child: _createRowPersonalData("Cambiar de perfil - Trabajador","assets/images/comunicacion.png")),
             _createRowPersonalData("Cerrar sesión","assets/images/salida.png")
             
           ],
@@ -35,7 +37,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _createRowPersonalData(String opt,String assetPath){
+    Size size = MediaQuery.sizeOf(context);
     return Container(
+      width: size.width,
       margin: const EdgeInsets.only(top: 10.0,bottom: 10.0),
       child: Row(
         children: [

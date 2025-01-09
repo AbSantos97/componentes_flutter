@@ -2,6 +2,7 @@ import 'package:componentes_basicos/src/connections/http_request.dart';
 import 'package:componentes_basicos/src/models/especialidades_por_servicio.dart';
 import 'package:componentes_basicos/src/models/usuarios_ultima_busqueda.dart';
 import 'package:componentes_basicos/src/static/static_attributes.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -15,14 +16,14 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
 
   HttpRequest httpRequest = HttpRequest();
-  
+  final GlobalKey<DropdownSearchState> dropDownKeyOficios =
+      GlobalKey<DropdownSearchState>();
   List<UsuariosUltimaBusqueda> usuariosUltimaBusqueda = List.empty(growable: true);
 
   String valueOficioInput = "";
   String valueOfSpeciality = "";
   TextEditingController oficioController = TextEditingController();
   final List<String> _listOfEspecialization = List.empty(growable: true);
-  String _dropdownValue = "Seleccione una opción";
   
   @override
   Widget build(BuildContext context) {
@@ -39,6 +40,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   _createFirstInputRow(),
+                  const SizedBox(height: 10.0),
                   _createSecondInputRow(),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
@@ -66,22 +68,24 @@ class _SearchScreenState extends State<SearchScreen> {
     valueOficioInput = "";
     valueOfSpeciality = "";
     oficioController.text = "";
-    _dropdownValue = "Seleccione una opción";
+    usuariosUltimaBusqueda.clear();
     _listOfEspecialization.clear();
     _listOfEspecialization.add("Seleccione una opción");
 
     setState(() {
-      _dropdownValue;
       _listOfEspecialization;
+      usuariosUltimaBusqueda;
       valueOficioInput;
     });
   }
 
-  void funcionLimpiarEspecialidad(){
+  void funcionLimpiarEspecialidad() async{
     valueOfSpeciality = "";
-    _dropdownValue = "Seleccione una opción";
+    usuariosUltimaBusqueda.clear();
+    usuariosUltimaBusqueda.addAll(await actualizarListaTrabajadores(oficioController.text, ""));
+
     setState(() {
-      _dropdownValue;
+      usuariosUltimaBusqueda;
       valueOfSpeciality;
     });
 
@@ -105,20 +109,13 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Widget _listarTrabajadores(){
-    usuariosUltimaBusqueda.clear();
-    usuariosUltimaBusqueda.add(UsuariosUltimaBusqueda("Abraham Olvera Santos", "Programador", 4.3, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Doctor"));
-    usuariosUltimaBusqueda.add(UsuariosUltimaBusqueda("Eduardo Soriano Lopez", "Programador", 4.5, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Maestro"));
-    usuariosUltimaBusqueda.add(UsuariosUltimaBusqueda("Roberto Garcia Martinez", "Programador", 4.0, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Fontanero"));
-    usuariosUltimaBusqueda.add(UsuariosUltimaBusqueda("Jose Angel Gonzalez Terron", "Programador", 5.0, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Fotografo"));
-    usuariosUltimaBusqueda.add(UsuariosUltimaBusqueda("Margarita de Jesus Vela Cruz", "Programador", 4.3, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Pintor"));
-    usuariosUltimaBusqueda.add(UsuariosUltimaBusqueda("Karen de Soriano ", "Programador", 4.5, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Arquitecto"));
-    usuariosUltimaBusqueda.add(UsuariosUltimaBusqueda("Guadalupe Janet Romero Garcia", "Programador", 4.0, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Repartidor"));
-    usuariosUltimaBusqueda.add(UsuariosUltimaBusqueda("Daniel Guadalupe Romero Sainz", "Programador", 5.0, "https://cdn-icons-png.flaticon.com/512/3135/3135768.png","Contratista"));
     
     final Size size = MediaQuery.sizeOf(context);
     final double width = size.width;
     final double height = size.height;
-
+    if(usuariosUltimaBusqueda.isEmpty){
+      return Container();
+    }
     return Column(
         children: [
           for(var index in usuariosUltimaBusqueda)
@@ -129,7 +126,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget _cardBusquedaPorUsuario(UsuariosUltimaBusqueda index, double width, double height) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, '/detalles_servicio_usuario',arguments: index),
+      onTap: () => Navigator.pushNamed(context, '/detalles_servicio_usuario',arguments: index.id),
       child: Card(
         elevation: 2.0,
         color: Colors.grey.shade300,
@@ -145,8 +142,8 @@ class _SearchScreenState extends State<SearchScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(index.nombre,style: StaticAttributesUtils.estiloTitulos(),maxLines: 1,overflow: TextOverflow.ellipsis,),
-                Text(index.oficio,style: StaticAttributesUtils.estilosSimpleTexto()),
-                Text(index.especialidad,style: StaticAttributesUtils.estilosSimpleTexto()),
+                Text(index.oficio,style: StaticAttributesUtils.estilosSimpleTexto(),maxLines: 1,overflow: TextOverflow.ellipsis,),
+                Text(index.especialidad,style: StaticAttributesUtils.estilosSimpleTexto(),maxLines: 1,overflow: TextOverflow.ellipsis,),
                 _crearRankingCalificacion(index.calificacion),
               ],
             ),
@@ -188,90 +185,84 @@ class _SearchScreenState extends State<SearchScreen> {
          );
   }
 
-  Row _createSecondInputRow(){
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Text("Especialidad: ",style: StaticAttributesUtils.estilosSimpleTexto()),
-        const SizedBox(width: 10.0),
-        Expanded(
-          child: Container(
-            margin: const EdgeInsets.only(right: 10.0),
-            child: DropdownButton(
-              isExpanded: true,
-              menuMaxHeight: 300.0,
-              value: _dropdownValue,
-              disabledHint: Text(_dropdownValue),
-              icon: const Icon(Icons.arrow_drop_down),
-              items: _listOfEspecialization.map<DropdownMenuItem<String>>(
-                (String elem) => _createDropDowmMenuItem(elem)).toList(),
-              onChanged: (String? value) async {
-                 _dropdownValue = value!;
-                valueOfSpeciality = value;
-                setState(() {
-                  valueOfSpeciality;
-                });
-              },
+  Widget _createSecondInputRow(){
+    return DropdownSearch<String>(
+            key: dropDownKeyOficios,
+            selectedItem: valueOfSpeciality,
+            onChanged: (value) async {
+              valueOfSpeciality = value!;
+               await actualizarListaTrabajadoresPorEspecialidad(value);
+              setState(() {
+                valueOfSpeciality;
+                
+              });
+            },
+            enabled: true,
+            filterFn: (item, filter) {
+              return item.toLowerCase().contains(filter.toLowerCase());
+            },
+            items: (filter, infiniteScrollProps) => _listOfEspecialization,
+            decoratorProps: const DropDownDecoratorProps(   
+              decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(),
+                labelText: 'Especialidades:',
+                border: OutlineInputBorder(),
+                labelStyle: TextStyle(color: Colors.black),
+                fillColor: Colors.black,
+                focusedBorder: OutlineInputBorder(),
+              ),
             ),
-          ),
-        )       
-      ],
-    );
+            popupProps: const PopupProps.menu(
+                showSearchBox: false,
+                cacheItems: true,
+                showSelectedItems: true,
+                fit: FlexFit.loose,
+                constraints: BoxConstraints(maxHeight: 400.0)),
+          );
   }
 
-  Row _createFirstInputRow(){
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          margin: const EdgeInsets.only(top: 12.0),
-          child: Text("Buscar: ",style: StaticAttributesUtils.estilosSimpleTexto())),
-        const SizedBox(width: 10.0),
-        Expanded(
-          child: TextField(
+  Future<void> actualizarListaTrabajadoresPorEspecialidad(String value)async {
+    usuariosUltimaBusqueda.clear();
+    usuariosUltimaBusqueda.addAll(await actualizarListaTrabajadores(oficioController.text, value));
+    setState(() {
+      usuariosUltimaBusqueda;
+    });
+  }
+
+  Widget _createFirstInputRow(){
+    return TextField(
             controller: oficioController,
               autocorrect: false,
+              onSubmitted: (value) {
+                _llenarLista();
+              },
               autofocus: false,
               keyboardType: TextInputType.text,
               decoration: const InputDecoration(
+                border: OutlineInputBorder(),
                 label: Text("Oficio / Profesión")
               ),
-            ),
-        ),
-        const SizedBox(width: 10.0),
-          Container(
-            margin: const EdgeInsets.only(top: 12.0,right: 10.0),
-            child: IconButton(onPressed: () async {
-                _llenarLista();
-            } ,
-            color: Colors.black,
-             icon: const Icon(Icons.search),
-             tooltip: "Buscar",
-             ),
-          )
-          
-      ],
-    );
-  }
-
-  DropdownMenuItem<String> _createDropDowmMenuItem(String item){
-    bool enabled = item != "Seleccione una opción";
-    return DropdownMenuItem(value:item, enabled: enabled, child: Text(item,style: StaticAttributesUtils.estilosSimpleTexto()));
+        );
   }  
 
   void _llenarLista() async {
-    valueOficioInput = oficioController.text;
+    if(oficioController.text.trim().isNotEmpty){
+      valueOficioInput = oficioController.text.trim();
+      _listOfEspecialization.clear();
+      List<EspecialidadesPorServicio> lista = await httpRequest.getEspecialidadesByFilter(valueOficioInput);
+      _listOfEspecialization.addAll(lista.map((e) => e.nombre).toSet().toList());
+      usuariosUltimaBusqueda.clear();
+      usuariosUltimaBusqueda.addAll(await actualizarListaTrabajadores(valueOficioInput, ""));
+      setState(() {
+        _listOfEspecialization;
+        valueOficioInput;
+        usuariosUltimaBusqueda;
+      });
+    }
+  }
 
-    _dropdownValue = "Seleccione una opción";
-    _listOfEspecialization.clear();
-    _listOfEspecialization.add("Seleccione una opción");
-    List<EspecialidadesPorServicio> lista = await httpRequest.getEspecialidadesByFilter(valueOficioInput);
-    _listOfEspecialization.addAll(lista.map((e) => e.nombre).toSet().toList());
-    setState(() {
-      _dropdownValue;
-      _listOfEspecialization;
-      valueOficioInput;
-    });
+  Future<List<UsuariosUltimaBusqueda>> actualizarListaTrabajadores(String oficio, String especialidad) async {
+    List<UsuariosUltimaBusqueda> usuariosTmp = await httpRequest.obtenerUsuariosPorBusqueda(oficio, especialidad);
+    return usuariosTmp;
   }
 }
