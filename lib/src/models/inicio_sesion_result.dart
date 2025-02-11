@@ -7,10 +7,11 @@ class InicioSesionResult {
     final String token;
     final String role;
     final String id;
+    final String chatReferenceId;
     final String errorMessage;
 
     const InicioSesionResult.success({required this.id, required this.firstName,required this.firstLastName,
-    required this.secondLastName,required  this.role,required this.token}):errorMessage="";
+    required this.secondLastName,required  this.role,required this.token,required this.chatReferenceId}):errorMessage="";
 
     const InicioSesionResult.fail({required this.errorMessage}):
     firstLastName="",
@@ -18,6 +19,7 @@ class InicioSesionResult {
     firstName="",
     token="",
     role="",
+    chatReferenceId="",
     id="";
 
     factory InicioSesionResult.fromJson200(Map<String,dynamic> json) 
@@ -27,7 +29,8 @@ class InicioSesionResult {
       firstLastName: json['first_last_name'],
       secondLastName: json['second_last_name'],
       role: json['role'],
-      token: json['token']
+      token: json['token'],
+      chatReferenceId: json['chatreferenceId']
       );
     
     factory InicioSesionResult.fromJsonError(Map<String,dynamic> json) 

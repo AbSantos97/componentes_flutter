@@ -23,6 +23,7 @@ class _SimpleCampoTextoState extends State<SimpleCampoTexto> {
       autocorrect: modeloCampo.autocorrect,
       maxLength: modeloCampo.longitudCampo,
       controller: modeloCampo.defaultController,
+      readOnly: modeloCampo.justLecture,
       obscureText: modeloCampo.obscureText,
       keyboardType: modeloCampo.tipo,
       minLines: 1,

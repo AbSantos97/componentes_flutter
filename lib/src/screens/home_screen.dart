@@ -157,7 +157,8 @@ Widget crearCardUltimaBusquedasUsuarios(UsuariosUltimaBusqueda usuarioActual){
 }
 
 RatingBar ratingBarFunction(UsuariosUltimaBusqueda usuarioActual) {
-  return RatingBar(ratingWidget: RatingWidget(
+  return RatingBar(
+    ratingWidget: RatingWidget(
         full: const Icon(Icons.star_outlined,
         color: Colors.amber), 
         half: const Icon(
@@ -220,10 +221,6 @@ Widget cardTopService(double width, double height, TopBusquedas busqueda) {
 }
 
   Widget crearListViewUltimasContrataciones() {
-    final Size size = MediaQuery.sizeOf(context);
-    final double width = size.width;
-    final double height = size.height;
-
     return Card(
         elevation: 2.0,
         margin: const EdgeInsets.all(7.0),
@@ -237,16 +234,55 @@ Widget cardTopService(double width, double height, TopBusquedas busqueda) {
               child: Text("Ultimos servicios contratados",style: StaticAttributesUtils.estiloTitulos()),
             ),
             const Divider(),
-            Column(
-              children: [
-                for(var index in ultimaBusqueda)
-                  columnLastCard(index, width, height)
-            ]
-          )
+            for(var index in ultimaBusqueda)itemBuilder(index),
+
           ] ,
         )
     );
   }
+
+  Widget itemBuilder(UsuariosUltimaBusqueda contractList) {
+    return Container(
+      margin: const EdgeInsets.only(left: 9, right: 9, top: 7),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade200,
+        border: Border.all(width: 3, color: Colors.grey.shade300),
+        borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+      ),
+      child: ListTile(
+        contentPadding: const EdgeInsets.only(top: 3, bottom: 3),
+        isThreeLine: true,
+        leading: Container(
+          margin: const EdgeInsets.only(left: 5, top: 5),
+          child: CircleAvatar(
+              backgroundImage: NetworkImage(contractList.imagen)),
+        ),
+        title: Text(contractList.nombre,
+            style: StaticAttributesUtils.estilosSimpleTexto22(),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis),
+        subtitle: Text(contractList.oficio,
+            style: StaticAttributesUtils.estilosSimpleTexto(),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis),
+        dense: true,
+        trailing: Container(
+          width: 50,
+          margin: EdgeInsets.only(right: 5),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text("${contractList.calificacion}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
+                const Icon(Icons.star,color: Colors.amber,)
+              ],
+            
+          )
+        ),
+      ),
+    );
+  }
+
+
 
   Widget columnLastCard(UsuariosUltimaBusqueda index,double width,double height) {
     return Card(

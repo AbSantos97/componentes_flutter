@@ -24,7 +24,7 @@ class FormularioTrabajador extends StatefulWidget {
 class _FormularioTrabajadorState extends State<FormularioTrabajador> {
   HttpRequest httpRequest = HttpRequest();
   SimpleCampoTexto compania = SimpleCampoTexto(
-      ModeloSimpleCampoTexto.mensajeJustLecture(
+      ModeloSimpleCampoTexto.mensajeErrorPorDefecto(
           "Nombre de la compañia", TextInputType.name, 25, true));
   SimpleCampoTexto alias = SimpleCampoTexto(
       ModeloSimpleCampoTexto.campoNoRequerido(
@@ -36,7 +36,7 @@ class _FormularioTrabajadorState extends State<FormularioTrabajador> {
       ModeloSimpleCampoTexto.campoNoRequerido(
           "Ubicación", TextInputType.text, 300, true));
   SimpleCampoTexto nuevaEspecialidad = SimpleCampoTexto(
-      ModeloSimpleCampoTexto.mensajeJustLecture(
+      ModeloSimpleCampoTexto.mensajeErrorPorDefecto(
           "Especialidad", TextInputType.name, 100, true));
 
   List<String> itemsTrabajos = List.empty(growable: true);

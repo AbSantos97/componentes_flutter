@@ -38,7 +38,7 @@ class _CodigoVerificacionScreenState extends State<CodigoVerificacionScreen> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
                 child: Container(  
-                  width: size.width - 100.0,
+                  width: size.width - 50.0,
                   color: Colors.white,
                   child:  Column(
                     crossAxisAlignment: CrossAxisAlignment.center,

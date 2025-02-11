@@ -5,10 +5,12 @@ import 'package:componentes_basicos/src/screens/conversacion_screen.dart';
 import 'package:componentes_basicos/src/screens/counter_screen.dart';
 import 'package:componentes_basicos/src/screens/crear_cuenta_inicial.dart';
 import 'package:componentes_basicos/src/screens/datos_generales_contratos.dart';
+import 'package:componentes_basicos/src/screens/detalles_contrato.dart';
 import 'package:componentes_basicos/src/screens/editar_datos_profile_client.dart';
 import 'package:componentes_basicos/src/screens/formulario_trabajador.dart';
 import 'package:componentes_basicos/src/screens/http_request_widget.dart';
 import 'package:componentes_basicos/src/screens/information_service.dart';
+import 'package:componentes_basicos/src/screens/lista_contratos_widget.dart';
 import 'package:componentes_basicos/src/screens/login_component.dart';
 import 'package:componentes_basicos/src/screens/profile_view.dart';
 import 'package:componentes_basicos/src/screens/search_screen.dart';
@@ -47,7 +49,9 @@ class MyApp extends StatelessWidget {
         '/edit_client_profile': (context) => const EditarDatosProfileClient(),
         '/form_contrato': (context) => const DatosGeneralesContratos(),
         '/formulario_trabajador': (context) => const FormularioTrabajador(),
-        '/verificar_codigo_creacion': (context) => const CodigoVerificacionScreen()
+        '/verificar_codigo_creacion': (context) => const CodigoVerificacionScreen(),
+        '/lista_contratos': (context) => const ListaContratosWidget(),
+        '/detalles_contratos': (context) => const DetallesContratos()
       },
       supportedLocales: const [
          Locale('es'),

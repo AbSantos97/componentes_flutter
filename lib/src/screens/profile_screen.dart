@@ -22,8 +22,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               onTap: () => Navigator.pushNamed(context, "/info_profile"),
               child: _createRowPersonalData("Perfil","assets/images/portafolio-profesional.png")
             ),
-            _createRowPersonalData("Contratos finalizados","assets/images/camaraderia.png"),
-            _createRowPersonalData("Contratos en proceso","assets/images/licencias.png"),
+            GestureDetector(
+               onTap: () => Navigator.pushNamed(context, "/lista_contratos"),
+              child: _createRowPersonalData("Contratos en proceso","assets/images/licencias.png")),
             _createRowPersonalData("Metodos de pago","assets/images/metodo-de-pago.png"),
             GestureDetector(
               onTap: () => Navigator.pushNamed(context, "/formulario_trabajador"),

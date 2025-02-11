@@ -161,6 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
         await _storage.write(key: "token", value: response.token); 
         await _storage.write(key: "perfil", value: response.role);
         await _storage.write(key: "id", value: response.id);
+        await _storage.write(key: "chatId", value: response.chatReferenceId);
        }
 
        return response.errorMessage.isEmpty;

@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:componentes_basicos/src/models/album.dart';
+import 'package:componentes_basicos/src/models/contract_list.dart';
+import 'package:componentes_basicos/src/models/contract_model.dart';
 import 'package:componentes_basicos/src/models/especialidades_por_servicio.dart';
 import 'package:componentes_basicos/src/models/experiencia_trabajador.dart';
 import 'package:componentes_basicos/src/models/inicio_sesion_result.dart';
@@ -208,7 +210,37 @@ class HttpRequest{
       return "Imagen guardada con exito";
     }
     return "";
+  }
 
+  Future<void> generarContrato(ContractModel contractModel)async {
+    final response = await http.post(Uri.parse("https://api.conectalabores.com/contract/create_contract/"),
+    body: jsonEncode(<String,String>{
+      "contract_text_reference_id": contractModel.contractTextReferenceId.toString(),
+      "status_id": contractModel.statusId.toString(),
+      "user_id": contractModel.empleadorId,
+      "worker_experience_id": contractModel.workerExperienceId.toString(),
+      "chat_id": "asasasasa",
+      "contract_name": contractModel.contractName,
+      "work_description": contractModel.workDescription,
+      "amount": contractModel.amount.toString()
+    }),
+    headers: {
+      HttpHeaders.contentTypeHeader: 'application/json; charset=UTF-8'
+    });
+
+    if(response.statusCode == 200){
+      print("La respuesta fue 200");
+    }
+  }
+
+  Future<List<ContractList>> obtenerContratosPorIdUsuario(String idUsuario) async {
+    final response = await http.get(Uri.parse("https://api.conectalabores.com/contract/contractbyuser/$idUsuario"));
+    if(response.statusCode == 200){
+      List<dynamic> responseList = jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
+      return responseList.map((e) => ContractList.success200(e)).toList();
+
+    }
+    return List.empty();
   }
 
 }

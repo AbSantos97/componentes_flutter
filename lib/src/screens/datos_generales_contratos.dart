@@ -1,8 +1,12 @@
 import 'package:componentes_basicos/src/connections/http_request.dart';
+import 'package:componentes_basicos/src/models/contract_model.dart';
 import 'package:componentes_basicos/src/models/modelo_simple_campo_texto.dart';
+import 'package:componentes_basicos/src/models/user_data.dart';
 import 'package:componentes_basicos/src/static/static_attributes.dart';
+import 'package:componentes_basicos/src/widgets/loading_simple_page.dart';
 import 'package:componentes_basicos/src/widgets/simple_campo_texto.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class DatosGeneralesContratos extends StatefulWidget {
   const DatosGeneralesContratos({super.key});
@@ -15,6 +19,8 @@ class _DatosGeneralesContratosState extends State<DatosGeneralesContratos> {
 
    HttpRequest httpRequest = HttpRequest();
   SimpleCampoTexto trabajador = SimpleCampoTexto(ModeloSimpleCampoTexto.mensajeJustLecture("Trabajador", TextInputType.name, 25, true));
+  SimpleCampoTexto nombreServicio = SimpleCampoTexto(ModeloSimpleCampoTexto.mensajeErrorPorDefecto("Nombre del servicio", TextInputType.name, 25, true));
+  SimpleCampoTexto descripcionServicio = SimpleCampoTexto(ModeloSimpleCampoTexto("Descripción del servicio", TextInputType.multiline, 300, true,'El campo Descripción del servicio es requerido'));
   SimpleCampoTexto empleador = SimpleCampoTexto(ModeloSimpleCampoTexto.mensajeJustLecture("Empleador", TextInputType.name, 25, true));
   SimpleCampoTexto precioEstimado = SimpleCampoTexto(ModeloSimpleCampoTexto.mensajeErrorPorDefecto("Precio estimado", TextInputType.number, 10, true));
   final _formKey = GlobalKey<FormState>();
@@ -24,6 +30,24 @@ class _DatosGeneralesContratosState extends State<DatosGeneralesContratos> {
   DateTime fechaFin = DateTime.now();
   bool inicialize = false;
   bool popAvailable = false;
+  final _storage = const FlutterSecureStorage(aOptions: AndroidOptions(encryptedSharedPreferences: true));
+  String? userId = "";
+  bool showLoading = true;
+
+  @override
+  void initState() {
+    startUser();
+    super.initState();
+  }
+
+  Future<void> startUser() async {
+    userId = await _storage.read(key: "id");
+    UserData user = await httpRequest.getUsuarioEspecifico(userId!);
+    String nombreUsuario = '${user.firstName} ${user.lastName} ${user.secondLastName}';
+    trabajador.modeloCampo.defaultController.text = nombreUsuario;
+    showLoading = false;
+    setState(() {showLoading;});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,110 +69,132 @@ class _DatosGeneralesContratosState extends State<DatosGeneralesContratos> {
         leading: IconButton(onPressed: ()async => buildDialog(context), icon: const Icon(Icons.arrow_back)),
       ),
       backgroundColor: Colors.amber.shade400,
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: 40.0),
-                child: Text('Crear contrato',style: StaticAttributesUtils.estilosSimpleTextoNegritas(22))),
-              const SizedBox(height: 20.0),
-              Stack(
-                clipBehavior: Clip.none,
-                alignment: Alignment.topCenter,
+      body: Stack(
+        children: [
+          Center(
+            child: SingleChildScrollView(
+              child: Column(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(20.0),
-                    child: Container(
-                      padding: const EdgeInsets.all(20.0),
-                      color: Colors.white,
-                      width: width - 50,
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                            margin: const EdgeInsets.only(top: 35.0,bottom: 5.0),
-                            child: trabajador
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 40.0),
+                    child: Text('Crear contrato',style: StaticAttributesUtils.estilosSimpleTextoNegritas(22))),
+                  const SizedBox(height: 20.0),
+                  Stack(
+                    clipBehavior: Clip.none,
+                    alignment: Alignment.topCenter,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(20.0),
+                        child: Container(
+                          padding: const EdgeInsets.all(20.0),
+                          color: Colors.white,
+                          width: width - 50,
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                margin: const EdgeInsets.only(top: 35.0,bottom: 5.0),
+                                child: trabajador
+                                ),
+                                Container(
+                                margin: const EdgeInsets.only(top: 5.0,bottom: 5.0),
+                                child: empleador
+                                ),
+                                Container(
+                                margin: const EdgeInsets.only(top: 5.0,bottom: 5.0),
+                                child: nombreServicio
+                                ),
+                                Container(
+                                margin: const EdgeInsets.only(top: 5.0,bottom: 5.0),
+                                child: descripcionServicio
+                                ),
+                                Container(
+                                margin: const EdgeInsets.only(top: 5.0,bottom: 5.0),
+                                child: precioEstimado
+                                ),
+                                Container(
+                                margin: const EdgeInsets.only(top: 10.0,bottom: 10.0),
+                                child: TextFormField(
+                                  controller: fechaInicioController,
+                                  showCursor: false,
+                                  readOnly: true,
+                                  autocorrect: false,
+                                  validator: (value) => validateText(value, "Fecha de inicio"),
+                                  onTap: () async {
+                                    FocusScope.of(context).requestFocus(FocusNode());
+                                    DateTime fecha = await _selectDateInicio(context);
+                                    String month = fecha.month <10?'0${fecha.month}':fecha.month.toString();
+                                    String day = fecha.day < 10?'0${fecha.day}':fecha.day.toString();
+                                    fechaInicioController.text = '${fecha.year}-$month-$day';
+                                  },
+                                  keyboardType: null,
+                                  decoration: const InputDecoration(
+                                    labelText: "Fecha de inicio del servicio *",
+                                    border: OutlineInputBorder()
+                                  ),
+                                )
+                                ),
+          
+                                Container(
+                                margin: const EdgeInsets.only(top: 15.0,bottom: 10.0),
+                                child: TextFormField(
+                                  controller: fechaFinController,
+                                  showCursor: false,
+                                  readOnly: true,
+                                  autocorrect: false,
+                                  validator: (value) => validateText(value, "Fecha fin"),
+                                  onTap: () async {
+                                    FocusScope.of(context).requestFocus(FocusNode());
+                                    DateTime fecha = await _selectDateFin(context);
+                                    String month = fecha.month <10?'0${fecha.month}':fecha.month.toString();
+                                    String day = fecha.day < 10?'0${fecha.day}':fecha.day.toString();
+                                    fechaFinController.text = '${fecha.year}-$month-$day';
+                                                                 
+                                  },
+                                  keyboardType: null,
+                                  decoration: const InputDecoration(
+                                    labelText: "Fecha fin aproximada del servicio *",
+                                    border: OutlineInputBorder()
+                                  ),
+                                )
+                                ),
+          
+                                OutlinedButton(
+                                  style: StaticAttributesUtils.estiloOutlineButton(45,Colors.black),
+                                  onPressed: callSaveFunction, 
+                                  child: Text("Generar contrato",style: StaticAttributesUtils.estilosSimpleTextoColorAlternativo())
+                                )
+                              ],
                             ),
-                            Container(
-                            margin: const EdgeInsets.only(top: 5.0,bottom: 5.0),
-                            child: empleador
-                            ),
-                            Container(
-                            margin: const EdgeInsets.only(top: 5.0,bottom: 5.0),
-                            child: precioEstimado
-                            ),
-                            Container(
-                            margin: const EdgeInsets.only(top: 10.0,bottom: 10.0),
-                            child: TextFormField(
-                              controller: fechaInicioController,
-                              showCursor: false,
-                              readOnly: true,
-                              autocorrect: false,
-                              validator: (value) => validateText(value, "Fecha de inicio"),
-                              onTap: () async {
-                                FocusScope.of(context).requestFocus(FocusNode());
-                                DateTime fecha = await _selectDateInicio(context);
-                                String month = fecha.month <10?'0${fecha.month}':fecha.month.toString();
-                                String day = fecha.day < 10?'0${fecha.day}':fecha.day.toString();
-                                fechaInicioController.text = '${fecha.year}-$month-$day';
-                              },
-                              keyboardType: null,
-                              decoration: const InputDecoration(
-                                labelText: "Fecha de inicio del servicio *",
-                                border: OutlineInputBorder()
-                              ),
-                            )
-                            ),
-
-                            Container(
-                            margin: const EdgeInsets.only(top: 15.0,bottom: 10.0),
-                            child: TextFormField(
-                              controller: fechaFinController,
-                              showCursor: false,
-                              readOnly: true,
-                              autocorrect: false,
-                              validator: (value) => validateText(value, "Fecha fin"),
-                              onTap: () async {
-                                FocusScope.of(context).requestFocus(FocusNode());
-                                DateTime fecha = await _selectDateFin(context);
-                                String month = fecha.month <10?'0${fecha.month}':fecha.month.toString();
-                                String day = fecha.day < 10?'0${fecha.day}':fecha.day.toString();
-                                fechaFinController.text = '${fecha.year}-$month-$day';
-                                                             
-                              },
-                              keyboardType: null,
-                              decoration: const InputDecoration(
-                                labelText: "Fecha fin aproximada del servicio *",
-                                border: OutlineInputBorder()
-                              ),
-                            )
-                            ),
-
-                            OutlinedButton(
-                              style: StaticAttributesUtils.estiloOutlineButton(45,Colors.black),
-                              onPressed: callSaveFunction, 
-                              child: Text("Generar contrato",style: StaticAttributesUtils.estilosSimpleTextoColorAlternativo())
-                            )
-                          ],
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
+                  const SizedBox(height: 30.0),
                 ],
               ),
-              const SizedBox(height: 30.0),
-            ],
+            ),
           ),
-        ),
+          showLoading? const LoadingSimplePage(): const SizedBox.shrink()
+        ],
       ),
     );
   }
 
   void callSaveFunction() async {
     if (_formKey.currentState!.validate()) {
+
+      ContractModel contrato = ContractModel.success200(empleadorId: "bb25075f-0a93-46e0-991b-dc9b37ba0e89", 
+      workerExperienceId: 15, 
+      contractName: nombreServicio.modeloCampo.defaultController.text, 
+      workDescription: descripcionServicio.modeloCampo.defaultController.text, 
+      amount: double.parse(precioEstimado.modeloCampo.defaultController.text));
+
+      await httpRequest.generarContrato(contrato);
+
       if(context.mounted){
         ScaffoldMessenger.of(context).showSnackBar(
          SnackBar(content: const Text("TODO OK")));

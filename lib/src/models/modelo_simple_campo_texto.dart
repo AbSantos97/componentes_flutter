@@ -17,7 +17,7 @@ class ModeloSimpleCampoTexto {
 
   ModeloSimpleCampoTexto.mensajeJustLecture(this.nombreCampo,this.tipo,this.longitudCampo,this.autocorrect):mensajeError= "El campo $nombreCampo es requerido",justLecture = true;
 
-   ModeloSimpleCampoTexto.campoNoRequerido(this.nombreCampo,this.tipo,this.longitudCampo,this.autocorrect):mensajeError= "",justLecture = true,requerido=false;
+   ModeloSimpleCampoTexto.campoNoRequerido(this.nombreCampo,this.tipo,this.longitudCampo,this.autocorrect):mensajeError= "",justLecture = false,requerido=false;
 
   ModeloSimpleCampoTexto.mensajeErrorPorDefecto(this.nombreCampo,this.tipo,this.longitudCampo,this.autocorrect):mensajeError= "El campo $nombreCampo es requerido";
 

@@ -51,6 +51,15 @@ class StaticAttributesUtils{
     );
   }
 
+  static TextStyle estilosSimpleTextoNegritasCustom(double size,Color color){
+    return TextStyle(
+      fontWeight: FontWeight.bold,
+      color: color,
+      fontStyle: FontStyle.normal,
+      fontSize: size
+    );
+  }
+
   static TextStyle estilosSimpleTextoNegritas(double size){
     return TextStyle(
       fontWeight: FontWeight.bold,
